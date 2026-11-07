@@ -80,7 +80,7 @@ def generate_deterministic_dataset() -> SeedDataset:
             "id": source_id,
             "merchant_id": merchant_id,
             "provider": SourceProvider.RAZORPAY,
-            "display_name": "Razorpay Production Gateway",
+            "display_name": "Payment Gateway (Production)",
             "environment": "live",
             "status": "ACTIVE",
             "last_sync_at": datetime(2026, 10, 1, 18, 0, tzinfo=UTC),
@@ -832,7 +832,7 @@ def generate_deterministic_dataset() -> SeedDataset:
                     "id": uuid.UUID(f"00000000-0000-4000-6000-{idx:012d}"),
                     "exception_id": exc_id,
                     "provider": "mock",
-                    "model": "gemini-1.5-pro",
+                    "model": "reconpilot-rf-v1",
                     "prompt_version": "v1.0",
                     "classification": AIClassification.FEE_RELATED
                     if exc_type == ExceptionType.FEE_MISMATCH

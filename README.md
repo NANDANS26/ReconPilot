@@ -1,43 +1,45 @@
 # ReconPilot — Autonomous Financial Reconciliation & Exception Investigation
 
-> **Razorpay AI Buildathon 2026** — *Track 4: AI Finance Controller*  
-> **Core Guarantee:** Purely deterministic financial matching, evidence-grounded AI root-cause investigation, and dual-control human governance. Zero automated ledger mutations.
+> **ReconPilot AI Finance Controller**
+> **Core Guarantee:** Purely deterministic financial matching, locally-intelligent ML root-cause reasoning, cryptographically-hashed evidence snapshots, and dual-control human governance. Zero automated ledger mutations.
 
 ---
 
-## 1. Executive Summary & Problem
+## 1. Executive Summary & Architecture
 
-Modern digital businesses process millions of transactions across internal ledgers, payment gateways (e.g. Razorpay), and banking networks. When fees drift, refunds arrive out of order, or settlement batches lag, manual spreadsheet reconciliation breaks down.
+Modern digital enterprises process millions of transactions across internal order systems, payment gateways, and banking networks. When fees drift, refunds arrive out of order, or settlement batches lag, manual spreadsheet reconciliation breaks down and financial leakage goes unnoticed.
 
-Conversely, naive generative AI approaches present serious compliance risks: hallucinations in arithmetic, fabricated transaction balances, or un-audited automated ledger modifications.
+Conversely, naive generative AI approaches present severe financial and operational risks: hallucinations in arithmetic, fabricated transaction balances, non-deterministic reasoning, or unauthorized ledger mutations.
 
 **ReconPilot resolves this dilemma through a strict separation of concerns:**
-1. **Deterministic Financial Truth:** All mathematical formulas, matching algorithms, and balance calculations are executed deterministically using fixed-point `Decimal` arithmetic in Python and PostgreSQL ACID storage.
-2. **Correlated Evidence Provenance:** Prior to any diagnostic analysis, a structured evidence dossier is correlated from source records, classifying evidence strength (`Confirmed`, `Corroborated`, `Conflicting`) and highlighting missing information.
-3. **Schema-Constrained AI Reasoning:** Generative LLMs analyze the evidence dossier strictly to evaluate root-cause hypotheses and recommend operational actions. The reasoner cites only verified evidence IDs, acknowledges operational limitations, and provides full transparency regarding its provider state (Live Gemini vs Deterministic Mock).
-4. **Dual-Control Human Governance:** Operational actions (such as write-offs or gateway escalations) are submitted as structured proposals. An automated Separation of Duties (SoD) engine prevents self-approval, requiring authorized reviewer sign-off and maintaining an immutable audit history.
+
+1. **Deterministic Financial Truth:** All mathematical calculations, matching algorithms, and balance calculations are executed deterministically using fixed-point `Decimal` arithmetic in Python and PostgreSQL ACID transactional storage.
+2. **Correlated Evidence Provenance & Cryptographic Snapshots:** Prior to diagnostic analysis, an immutable evidence dossier is correlated from source records. Every dossier is canonicalized and sealed with a deterministic SHA-256 hash, ensuring tamper-evident provenance.
+3. **Local Machine Learning Root-Cause Classifier:** Exception root-cause hypotheses are evaluated locally via an embedded CatBoost champion pipeline (rigorously benchmarked across Random Forest, HistGradientBoosting, XGBoost, LightGBM, and soft-voting ensembles). The ML engine operates entirely on integer minor-unit financial features (paise/cents) without target leakage or external network calls. Calibrated probabilities, conservative confidence thresholding, and margin-based abstention protect against ambiguity.
+4. **Evidence-Grounded Explanations:** Explanations cite only verified evidence IDs from the canonical snapshot and enforce strict policy gates (e.g. mandatory human review on high financial exposure).
+5. **Dual-Control Human Governance:** Operational resolutions (such as fee credit requests, invoice adjustments, or write-offs) are submitted as structured proposals. An automated Separation of Duties (SoD) engine prevents self-approval, requiring authorized reviewer sign-off and maintaining an immutable audit history.
 
 ---
 
 ## 2. Complete Product Workflow
 
 ```
- SOURCE RECORDS (Internal Ledgers, Razorpay Gateway, Bank Statements)
+ SOURCE RECORDS (Internal Ledgers, Payment Gateway Feeds, Bank Statements)
                      │
                      ▼
- DETERMINISTIC MATCHING ENGINE (Exact 2-Way, Tolerance, SLA Windows)
+ DETERMINISTIC MATCHING ENGINE (Exact 2-Way, Bilateral Invariant Matching, Duplicate Quarantine)
                      │
                      ├── [Matched Records] ──► Expected Settlement Verified
                      │
                      └── [Discrepancies] ────► Categorized Financial Exceptions
                                                    │
                                                    ▼
-                                     EVIDENCE CORRELATION ENGINE
-                                     (Dossier Assembly & Provenance)
+                                     EVIDENCE CORRELATION & SNAPSHOTS
+                                     (Dossier Assembly & SHA-256 Hash)
                                                    │
                                                    ▼
-                                      AI ROOT CAUSE REASONER
-                                     (Hypotheses Citing Evidence)
+                                     LOCAL ML ROOT-CAUSE REASONER
+                                     (Embedded Pipeline, Abstention Gates)
                                                    │
                                                    ▼
                                      DUAL-CONTROL HUMAN APPROVAL
@@ -49,30 +51,48 @@ Conversely, naive generative AI approaches present serious compliance risks: hal
 
 ---
 
-## 3. Technology Stack & Architecture
+## 3. Technology Stack & Key Highlights
 
-ReconPilot is built as a **clean, modular monolith**:
-
-| Layer | Technologies | Rationale |
+| Layer | Technologies | Architectural Invariants |
 |:---|:---|:---|
-| **Frontend** | React 18, TypeScript (Strict), Vite, Tailwind CSS, Recharts, Lucide Icons | High-performance SPA with strict typing, responsive data visualizations, and professional fintech hierarchy. |
-| **Backend API**| Python 3.11+ / FastAPI, Pydantic 2.x, Uvicorn ASGI | Native async I/O, strict schema contracts, high throughput, and automatic OpenAPI documentation. |
-| **Database** | **PostgreSQL (Exclusively)** with SQLAlchemy 2.x & Alembic | ACID transactional guarantees, row-level locking, and `NUMERIC(20, 2)` monetary precision. No SQLite or MongoDB. |
-| **Reconciliation**| Python `Decimal` fixed arithmetic (28-digit precision) | Zero floating-point rounding errors in financial matching or fee verification. |
-| **AI Reasoner** | Google Gemini 1.5 Pro / Flash + Deterministic Mock Provider | Schema-constrained Pydantic output; seamless fallback to deterministic mock when offline. |
+| **Frontend** | React 18, TypeScript (Strict), Vite, Tailwind CSS, Recharts, Lucide Icons | Premium fintech dashboard with real-time KPI metrics, dark aesthetic, responsive charts, and guided demo experience. |
+| **Backend API**| Python 3.11+ / FastAPI, Pydantic 2.x, Uvicorn ASGI | Strict API contracts, asynchronous I/O, RFC-compliant JWT authorization, and comprehensive endpoint validation. |
+| **Database** | **PostgreSQL (Exclusively)** with SQLAlchemy 2.x & Alembic | ACID transactional guarantees, row-level locking, additive schema migrations, and `NUMERIC(20, 2)` monetary precision. |
+| **Reconciliation**| Python `Decimal` fixed arithmetic (28-digit precision) | Zero floating-point drift, bilateral 1-to-1 candidate matching, and input permutation invariance. |
+| **ML Engine** | CatBoost, LightGBM, XGBoost, scikit-learn, joblib | Offline multiclass CatBoost Champion (with multi-model benchmarking suite, versioned schema `v1.0`, Platt scaling calibration, and conservative margin abstention). |
+| **Security & Auditing** | Argon2id, Cryptographic SHA-256, RBAC | Tamper-evident evidence hashing, multi-tenant isolation, and complete audit trail. |
 
 ---
 
-## 4. Key Capabilities by Phase
+## 4. Local Machine Learning Engine
 
-- **Phase 01–03:** PostgreSQL financial schema, Argon2id authentication, RFC-compliant JWT tokens, Role-Based Access Control (`ADMIN`, `FINANCE_CONTROLLER`, `REVIEWER`, `FINANCE_OPERATOR`), and strict multi-tenant isolation.
-- **Phase 04:** Multi-stage deterministic reconciliation engine, expected payout calculation, variance detection, and benchmark accuracy evaluation.
-- **Phase 05:** Correlated financial evidence dossiers with fact corroboration, conflict detection, and evidence strength categorization.
-- **Phase 06:** AI-assisted investigation engine generating evidence-grounded hypotheses, citing audit IDs, and adhering to policy gates.
-- **Phase 07:** Dual-control human resolution workflow with proposals, separation of duties enforcement, and immutable decision logging.
-- **Phase 08:** Finance Operations Command Center featuring executive KPIs, multi-currency exposure segregation, 14-day trends, and an actionable operations queue.
-- **Phase 09:** Presenter Demo Mode, floating guided walkthrough, real-record scenario selector, and presenter readiness checklist.
-- **Phase 10:** Production deployment architecture and verified 5–7 minute judge demonstration script.
+ReconPilot replaces brittle cloud LLM prompts with an embedded, auditable, offline machine learning pipeline:
+
+- **Feature Schema (`v1.0`):** 31 numeric features in integer minor units (paise/cents) + 5 categorical features. Zero target leakage: all UUIDs, entity codes, and ground-truth answer labels are strictly excluded.
+- **Root-Cause Classification:** Classifies exceptions across 11 financial root-cause classes:
+  - `FEE_MISMATCH`
+  - `REFUND_MISMATCH`
+  - `ADJUSTMENT_MISMATCH`
+  - `AMOUNT_MISMATCH`
+  - `MISSING_PAYMENT`
+  - `MISSING_SETTLEMENT`
+  - `DUPLICATE_PAYMENT`
+  - `DUPLICATE_SETTLEMENT`
+  - `DELAYED_SETTLEMENT`
+  - `AMBIGUOUS_MATCH`
+  - `INSUFFICIENT_EVIDENCE`
+- **Conservative Abstention Gates:** When the predicted class probability falls below `ML_CONFIDENCE_THRESHOLD` (default: 0.50) or the difference between top candidate probabilities is less than `ML_MIN_MARGIN` (default: 0.10), the model safely abstains to `INSUFFICIENT_EVIDENCE` or `AMBIGUOUS_MATCH` and requires human operator review.
+- **Model Training, Multi-Algorithm Benchmark & Validation:**
+  ```bash
+  # Run full 5-algorithm benchmarking suite with Platt calibration and champion selection:
+  python -m app.ml.benchmarking.runner
+
+  # Run final independent evaluation and adversarial stress validation:
+  python -m app.ml.final_independent_validation
+
+  # Run held-out evaluation and confusion matrix inspection:
+  python -m app.ml.evaluation
+  ```
 
 ---
 
@@ -80,21 +100,19 @@ ReconPilot is built as a **clean, modular monolith**:
 
 ### Prerequisites
 - **Python:** 3.11 or newer (Python 3.14 verified)
-- **Node.js:** v20 or newer and npm (Node 20+ verified)
+- **Node.js:** v20 or newer and npm
 - **PostgreSQL:** 15, 16, 17, or 18 running locally on port 5432
 
-### Step 1: Clone and Configure Environment
+### Step 1: Configure Environment
 ```bash
 # Copy configuration template
 cp .env.example .env
 ```
-*(Review `.env` to confirm `DATABASE_URL` matches your local PostgreSQL instance).*
+*(Verify `.env` has your local PostgreSQL credentials in `DATABASE_URL`).*
 
 ### Step 2: Backend Setup
 ```bash
-# 1. Create and activate Python virtual environment
-python -m venv .venv
-
+# 1. Activate Python environment
 # Windows PowerShell:
 .venv\Scripts\Activate.ps1
 # Linux / macOS:
@@ -104,7 +122,9 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 
 # 3. Apply database migrations
-alembic -c server/alembic.ini upgrade head
+cd server
+python -m alembic upgrade head
+cd ..
 
 # 4. Start the FastAPI backend server
 python -m uvicorn app.main:app --app-dir server --reload --host 127.0.0.1 --port 8000
@@ -136,37 +156,30 @@ The local development database includes pre-seeded demonstration accounts for ev
 
 ---
 
-## 7. Documentation & Guides
+## 7. Verification & Test Suite
 
-- [**docs/JUDGE_DEMO.md**](docs/JUDGE_DEMO.md): A timed 5–7 minute script guiding evaluators through the complete end-to-end reconciliation lifecycle.
-- [**docs/DEPLOYMENT.md**](docs/DEPLOYMENT.md): Production cloud deployment specifications, hosting requirements, container setups, and zero-downtime migration guidelines.
-
----
-
-## 8. Verification & Test Suite
-
-ReconPilot maintains 100% test coverage across all domain modules:
+ReconPilot maintains exhaustive test coverage across all domain modules:
 
 ```bash
-# Run complete backend pytest suite (97 passing tests):
+# Run complete backend pytest suite (117 passing tests):
 python -m pytest server/tests/ -v
 
 # Run Python linter & code formatter:
 python -m ruff check server
 python -m ruff format server --check
 
-# Run frontend linting & production build:
+# Run frontend production build verification:
 cd client
-npm run lint
 npm run build
 ```
 
 ---
 
-## 9. Security, Compliance & Governance Principles
+## 8. Financial Invariants & Security Architecture
 
-1. **Non-Negotiable Determinism:** All arithmetic (fees, refunds, net payouts, variances) is calculated via Python `Decimal` and PostgreSQL `NUMERIC(20, 2)`. No LLM is ever used for mathematical calculations.
-2. **Separation of Duties (SoD):** A user who submits a resolution proposal is prohibited from approving it. Approval requires a distinct reviewer account.
-3. **Strict Multi-Currency Protection:** Exposures are segregated by currency (INR vs USD). Cross-currency addition is mathematically forbidden.
-4. **AI Transparency:** When live Gemini credentials are not supplied, the system operates via a deterministic mock provider, clearly labeled in the user interface.
-5. **Zero Automated Ledger Mutations:** Approval records a reviewed decision and audit trail entry; it never automatically mutates financial source records without authorized external ledger integration.
+1. **Non-Negotiable Determinism:** All arithmetic (fees, refunds, net payouts, variances) is calculated via Python `Decimal` and PostgreSQL `NUMERIC(20, 2)`. No machine learning model or external service is ever used for mathematical calculations.
+2. **Order Invariance & Bilateral Uniqueness:** Shuffling the order of payments or settlement items produces bitwise identical matches and exceptions. Candidates are matched if and only if uniquely supported on both sides.
+3. **Preventive Duplicate Quarantine:** Duplicate external reference IDs are isolated prior to matching, preventing double-counting or inflated match statistics.
+4. **Separation of Duties (SoD):** A user who submits a resolution proposal is strictly prohibited from approving it. Approval requires a distinct reviewer account.
+5. **Multi-Currency Protection:** Financial exposures are segregated by currency (e.g. INR vs USD). Cross-currency arithmetic is strictly forbidden.
+6. **Zero Automated Ledger Mutations:** Approval records an authorized human decision in the immutable audit trail; it never automatically modifies source ledger records without external human intervention.

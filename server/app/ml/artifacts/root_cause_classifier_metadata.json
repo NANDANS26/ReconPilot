@@ -1,0 +1,252 @@
+{
+  "model_name": "reconpilot-catboost-champion",
+  "model_family": "catboost",
+  "feature_schema_version": "v1.0",
+  "algorithm": "catboost",
+  "classes": [
+    "FEE_MISMATCH",
+    "REFUND_MISMATCH",
+    "ADJUSTMENT_MISMATCH",
+    "AMOUNT_MISMATCH",
+    "MISSING_PAYMENT",
+    "MISSING_SETTLEMENT",
+    "DUPLICATE_PAYMENT",
+    "DUPLICATE_SETTLEMENT",
+    "DELAYED_SETTLEMENT",
+    "AMBIGUOUS_MATCH",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "promoted_at": "2026-11-07T21:41:16.645013",
+  "selection_rationale": "Promoted CATBOOST as New Production Champion: maintained equivalent holdout Macro F1 (0.9991 vs baseline 1.0000) while delivering a 77.0% latency reduction (9.613ms vs 41.877ms), 204.98KB artifact size vs 759.47KB, and zero critical class recall degradation.",
+  "metrics": {
+    "accuracy": 0.9991,
+    "macro_f1": 0.9991,
+    "weighted_f1": 0.9991,
+    "balanced_accuracy": 0.9991,
+    "log_loss": 0.0255,
+    "brier_score": 0.0014,
+    "expected_calibration_error": 0.0248,
+    "per_class": {
+      "ADJUSTMENT_MISMATCH": {
+        "precision": 0.9901,
+        "recall": 1.0,
+        "f1_score": 0.995,
+        "support": 100
+      },
+      "AMBIGUOUS_MATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "AMOUNT_MISMATCH": {
+        "precision": 1.0,
+        "recall": 0.99,
+        "f1_score": 0.995,
+        "support": 100
+      },
+      "DELAYED_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "DUPLICATE_PAYMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "DUPLICATE_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "FEE_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "MISSING_PAYMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "MISSING_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "REFUND_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      }
+    },
+    "confusion_matrix": [
+      [
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        99,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100
+      ]
+    ]
+  },
+  "calibration": {
+    "brier_score_uncalibrated": 0.0148,
+    "brier_score_calibrated": 0.0028,
+    "ece_uncalibrated": 0.0744,
+    "ece_calibrated": 0.0264,
+    "calibration_improved": true
+  },
+  "latency_ms": 0.0,
+  "artifact_size_kb": 204.98
+}

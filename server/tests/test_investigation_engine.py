@@ -65,7 +65,7 @@ def cleanup_investigation_test_records():
     db = SessionLocal()
     try:
         db.query(InvestigationReport).filter(
-            InvestigationReport.provider.in_(["mock", "test_mock", "failing_mock"])
+            InvestigationReport.provider.in_(["mock", "test_mock", "failing_mock", "local_ml"])
         ).delete(synchronize_session=False)
         db.query(User).filter(User.email.like("test_inv_%")).delete(synchronize_session=False)
         db.query(Merchant).filter(Merchant.name.like("Test Inv Merchant%")).delete(

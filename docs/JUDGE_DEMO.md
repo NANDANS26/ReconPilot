@@ -1,8 +1,8 @@
-# ReconPilot — 5–7 Minute Judge Demonstration Script
+# ReconPilot — 5–7 Minute Evaluation Demonstration Script
 
-> **Track 4:** AI Finance Controller — Razorpay AI Buildathon 2026  
+> **Product:** ReconPilot Autonomous AI Finance Controller
 > **Demonstration Target Duration:** 5 to 7 minutes  
-> **Guiding Principle:** Deterministic financial truth first, evidence-grounded AI reasoning second, dual-control human governance always. Zero automated ledger mutations.
+> **Guiding Principle:** Deterministic financial truth first, evidence-grounded local ML reasoning second, dual-control human governance always. Zero automated ledger mutations.
 
 ---
 
@@ -34,7 +34,7 @@
    - 14-Day Reconciliation Activity & Exposure trendline.
 
 ### What to Explain
-> *"High-growth payment businesses process millions of transactions across internal databases, payment gateways like Razorpay, and partner banks. Spreadsheets and brittle scripts fail when fees drift or settlement files arrive late. Furthermore, finance teams cannot trust generative AI to calculate financial balances or mutate ledgers.*
+> *"High-growth digital businesses process millions of transactions across internal databases, payment gateways, and partner banks. Spreadsheets and brittle scripts fail when fees drift or settlement files arrive late. Furthermore, finance teams cannot trust generative AI to calculate financial balances or mutate ledgers.*
 > 
 > *ReconPilot solves this by enforcing a hard separation of concerns: mathematical reconciliation is strictly deterministic in PostgreSQL, while AI is used strictly as an assistive diagnostics investigator. Notice that our exposure totals are segregated by currency (INR vs USD) — we never sum different currencies together."*
 
@@ -93,7 +93,7 @@
 
 ### What to Show
 1. The **AI Provider State Badge**:
-   - Explicitly displays: `Deterministic Mock Provider` (or `Live Provider: gemini-1.5-pro` if live credentials are configured).
+   - Explicitly displays: `Local ML Intelligence (reconpilot-catboost-champion)` (or `Deterministic Mock Provider` in fallback mode).
 2. The **Evaluated Hypotheses & Causes**:
    - Each hypothesis displays:
      - Root cause explanation.
@@ -103,12 +103,12 @@
    - Specific advisory steps (e.g., *"Initiate processor inquiry for missing ₹500 fee deduction"*).
    - Prominent badge: `"Review Required"`.
 4. **Provenance & Limitations Footer**:
-   - Provider name, model name, prompt template version, and timestamp.
+   - Provider name, model name, feature schema version, and cryptographic evidence snapshot hash.
 
 ### What to Explain
-> *"Now we introduce AI — but with strict constraints. The reasoner operates exclusively on the verified evidence dossier. It cannot hallucinate external data because the validator rejects any hypothesis that references non-existent evidence IDs.*
+> *"Now we introduce local AI — but with strict constraints. The reasoner operates exclusively on the verified evidence dossier. It cannot hallucinate external data because the validator rejects any hypothesis that references non-existent evidence IDs.*
 > 
-> *Notice our transparency badge: right now, it clearly states 'Deterministic Mock Provider'. We never disguise mock fallback as live AI. If credentials for Gemini 1.5 Pro are supplied, the exact same schema contract is enforced. Most importantly, AI output is strictly advisory — all operational recommendations require human approval."*
+> *Notice our transparency badge: it clearly states 'Local ML Intelligence (reconpilot-catboost-champion)'. ReconPilot runs an embedded, offline CatBoost classifier with calibrated confidence scoring and margin abstention gates. Most importantly, AI output is strictly advisory — all operational recommendations require human approval."*
 
 ### Key Judge Takeaway
 - Schema-constrained, evidence-cited AI diagnostics with full provider transparency and zero automated mutations.
@@ -135,7 +135,7 @@
    - An immutable chronological log recording every submission, decision, and operator comment.
 
 ### What to Explain
-> *"In enterprise finance, automated ledger writes are a compliance violation. ReconPilot enforces dual-control approval. An operator can propose an action (such as writing off ₹500 or escalating to Razorpay), but our Separation of Duties engine prevents self-approval. A separate reviewer or finance lead must review the evidence dossier and make the recorded decision."*
+> *"In enterprise finance, automated ledger writes are a compliance violation. ReconPilot enforces dual-control approval. An operator can propose an action (such as writing off ₹500 or escalating to the payment processor), but our Separation of Duties engine prevents self-approval. A separate reviewer or finance lead must review the evidence dossier and make the recorded decision."*
 
 ### Key Judge Takeaway
 - Strict financial controls: dual-control governance and separation of duties prevent fraud and unilateral write-offs.
@@ -162,7 +162,7 @@
 
 | Scenario / Blocker | Fallback Action During Live Demo |
 |:---|:---|
-| **Live AI credentials absent / network offline** | The application automatically uses the `mock` provider and explicitly badges it as `Deterministic Mock Provider`. Explain that the mock provider runs the exact same Pydantic schema validation as the live Gemini LLM without external API latency. |
+| **Local ML model artifact missing** | The application automatically falls back to the deterministic rule-grounded mock provider and badges it as `Deterministic Mock Provider`. Explain that the mock provider enforces the exact same Pydantic schema validation without degraded user experience. |
 | **Two-account login takes too long** | Stay logged in as `operator@reconpilot.local`. Show the disabled approval button and point out the lock badge: `"Requires different approver (Separation of Duties)"`. Explain this is proof that SoD is working. |
 | **Specific scenario missing** | The Demo Scenario Selector dynamically disables scenarios not found in the current dataset. Simply click any scenario labeled with a green `Available` badge. |
 | **Accidental navigation away** | Click the floating **Judge Walkthrough Guide** in the bottom-right corner and click `"Open Feature"` to instantly jump back to the intended step. |

@@ -83,12 +83,10 @@ All environment variables must be securely injected via your cloud platform's se
 | `API_HOST` | **Yes** | Bind host | `0.0.0.0` |
 | `API_PORT` | **Yes** | Bind port | `8000` |
 | `VITE_API_BASE_URL` | **Yes** | Client build-time backend API URL | `https://api.reconpilot.yourdomain.com/api/v1` |
-| `AI_PROVIDER` | No | Reasoner engine: `mock` or `gemini` | `gemini` (or `mock` for test envs) |
-| `LLM_API_KEY` | No | API key for Google Gemini | Secret token |
-| `LLM_MODEL` | No | Target model name | `gemini-1.5-pro` |
-| `RAZORPAY_KEY_ID` | No | Gateway key ID | Secret key |
-| `RAZORPAY_KEY_SECRET` | No | Gateway key secret | Secret key |
-| `RAZORPAY_WEBHOOK_SECRET` | No | Gateway webhook signature verification | Secret key |
+| `AI_PROVIDER` | No | Reasoner engine: `local_ml` or `mock` | `local_ml` |
+| `ML_MODEL_NAME` | No | Local ML model name | `reconpilot-rf-v1` |
+| `ML_CONFIDENCE_THRESHOLD` | No | Minimum confidence for non-abstention | `0.50` |
+| `ML_MIN_MARGIN` | No | Minimum probability margin between top classes | `0.10` |
 
 ---
 

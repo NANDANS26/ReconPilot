@@ -74,3 +74,35 @@ class IngestionSummaryResponse(BaseModel):
     inserted_adjustments: int
     skipped_records: int
     duration_ms: int
+
+
+class IngestPaymentItem(BaseModel):
+    external_id: str = Field(
+        description="Unique external transaction reference from payment provider"
+    )
+    amount: Decimal = Field(ge=Decimal("0.00"), description="Gross payment amount in major units")
+    currency: str = Field(default="INR", min_length=3, max_length=3)
+    status: str = Field(default="CAPTURED")
+    payment_method: str = Field(default="card")
+    captured_at: datetime | None = None
+    source_created_at: datetime
+    metadata: dict[str, Any] | None = None
+
+
+class BatchIngestPaymentsRequest(BaseModel):
+    payments: list[IngestPaymentItem]
+
+
+class BatchIngestResultItem(BaseModel):
+    external_id: str
+    status: str  # "INSERTED", "IDEMPOTENT_SKIPPED", "PAYLOAD_CONFLICT"
+    payment_id: uuid.UUID | None = None
+    detail: str | None = None
+
+
+class BatchIngestResponse(BaseModel):
+    total_received: int
+    inserted_count: int
+    idempotent_skipped_count: int
+    conflict_count: int
+    results: list[BatchIngestResultItem]

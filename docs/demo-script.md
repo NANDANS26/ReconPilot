@@ -41,7 +41,7 @@ This walkthrough demonstrates the verifiable state of the ReconPilot application
 ---
 
 ## Planned Subsequent Phase Walkthroughs
-- **Phase 02 Demo:** Uploading raw ledger CSV and synchronizing mock Razorpay payments.
+- **Phase 02 Demo:** Ingesting raw ledger CSV and synchronizing payment gateway transactions.
 - **Phase 03 Demo:** Executing 2-way deterministic reconciliation with fee mismatch detection.
 - **Phase 04 Demo:** Viewing structured AI evidence dossiers in the Human Review Queue and approving adjustments.
 - **Phase 05 Demo:** Exporting immutable audit logs and viewing match-rate evaluation benchmarks.

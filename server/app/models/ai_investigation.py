@@ -31,8 +31,8 @@ class AIInvestigation(Base):
     exception_id: Mapped[uuid.UUID] = mapped_column(
         Uuid(as_uuid=True), ForeignKey("exceptions.id", ondelete="CASCADE"), nullable=False
     )
-    provider: Mapped[str] = mapped_column(String(50), nullable=False, default="mock")
-    model: Mapped[str] = mapped_column(String(100), nullable=False, default="gemini-1.5-pro")
+    provider: Mapped[str] = mapped_column(String(50), nullable=False, default="local_ml")
+    model: Mapped[str] = mapped_column(String(100), nullable=False, default="reconpilot-rf-v1")
     prompt_version: Mapped[str] = mapped_column(String(50), nullable=False, default="v1.0")
     classification: Mapped[AIClassification] = mapped_column(
         Enum(AIClassification, name="ai_classification_enum", native_enum=False),

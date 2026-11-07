@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 from app.models.enums import (
     AdjustmentStatus,
@@ -77,21 +77,51 @@ def calculate_expected_settlement_for_payment(
             f"Settlement item currency {actual_item.currency} does not match payment currency {currency}"
         )
 
+    # Deduplicate component records to prevent double-counting
+    seen_refund_keys: set[Any] = set()
+    deduped_refunds: list[NormalizedRefund] = []
+    for r in refunds:
+        r_ext = getattr(r, "external_id", None)
+        key = (r.id, r_ext) if r_ext else r.id
+        if key not in seen_refund_keys:
+            seen_refund_keys.add(key)
+            deduped_refunds.append(r)
+
+    seen_fee_keys: set[Any] = set()
+    deduped_fees: list[NormalizedFee] = []
+    for f in fees:
+        f_ext = getattr(f, "external_id", None)
+        key = (f.id, f_ext) if f_ext else f.id
+        if key not in seen_fee_keys:
+            seen_fee_keys.add(key)
+            deduped_fees.append(f)
+
+    seen_adj_keys: set[Any] = set()
+    deduped_adjustments: list[NormalizedAdjustment] = []
+    for a in adjustments:
+        a_ext = getattr(a, "external_id", None)
+        key = (a.id, a_ext) if a_ext else a.id
+        if key not in seen_adj_keys:
+            seen_adj_keys.add(key)
+            deduped_adjustments.append(a)
+
     # Non-captured payments (failed, authorized-only) do not produce captured revenue
     payment_amount = Decimal("0.00") if payment.status != PaymentStatus.CAPTURED else payment.amount
 
     # Only PROCESSED refunds reduce expected settlement; PENDING/FAILED refunds do not
-    successful_refunds = [r for r in refunds if r.status == RefundStatus.PROCESSED]
+    successful_refunds = [r for r in deduped_refunds if r.status == RefundStatus.PROCESSED]
     successful_refund_total = sum((r.amount for r in successful_refunds), Decimal("0.00"))
 
     # Only ASSESSED fees are deducted; WAIVED fees are excluded
     # fee.amount is the recorded fee deducted from gross settlement
-    applicable_fees = [f for f in fees if f.status == FeeStatus.ASSESSED]
+    applicable_fees = [f for f in deduped_fees if f.status == FeeStatus.ASSESSED]
     applicable_fee_total = sum((f.amount for f in applicable_fees), Decimal("0.00"))
 
     # Only APPLIED adjustments affect expected settlement
     # Adjustments are signed: positive increases expected settlement, negative decreases
-    applicable_adjustments = [a for a in adjustments if a.status == AdjustmentStatus.APPLIED]
+    applicable_adjustments = [
+        a for a in deduped_adjustments if a.status == AdjustmentStatus.APPLIED
+    ]
     applicable_adjustment_total = sum((a.amount for a in applicable_adjustments), Decimal("0.00"))
 
     # Calculate expected settlement

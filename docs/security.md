@@ -4,7 +4,7 @@
 - Application configurations adhere to 12-factor principles using `.env` files.
 - `.env` and all credential patterns are strictly excluded in `.gitignore`.
 - Vite frontend configuration never exposes sensitive credentials (only public `VITE_` prefixed variables).
-- Secret keys and API keys (`RAZORPAY_KEY_SECRET`, `LLM_API_KEY`, `APP_SECRET_KEY`) reside exclusively in server memory.
+- Secret keys and authentication tokens (`JWT_SECRET_KEY`, `APP_SECRET_KEY`) reside exclusively in server memory.
 
 ## 2. API Security & Input Sanitization
 - All HTTP request payloads pass through strict Pydantic schemas.

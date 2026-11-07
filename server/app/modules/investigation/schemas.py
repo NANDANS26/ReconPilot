@@ -71,6 +71,9 @@ class InvestigationResponse(BaseModel):
     report: InvestigationReportData
     policy_flags: list[str] = Field(default_factory=list)
     requires_human_review: bool = True
+    evidence_snapshot_hash: str | None = None
+    model_score: float | None = None
+    inference_mode: str | None = None
     error_message: str | None = None
     created_at: datetime
     updated_at: datetime

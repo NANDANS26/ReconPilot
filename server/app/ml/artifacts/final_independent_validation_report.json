@@ -1,0 +1,261 @@
+{
+  "timestamp": "2026-11-07T22:11:40.142607",
+  "evaluation_seed": 20261107,
+  "sample_count": 1100,
+  "artifact_sha256": "2D205B26F419B37340B150DE1C49418444B48D6DC2DBE6BBF65EE70AF869C05E",
+  "artifact_size_kb": 204.98,
+  "model_name": "reconpilot-catboost-champion",
+  "metrics": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "weighted_f1": 1.0,
+    "balanced_accuracy": 1.0,
+    "log_loss": 0.0246,
+    "brier_score": 0.0007,
+    "expected_calibration_error": 0.0243,
+    "min_critical_recall": 1.0,
+    "per_class": {
+      "ADJUSTMENT_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "AMBIGUOUS_MATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "AMOUNT_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "DELAYED_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "DUPLICATE_PAYMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "DUPLICATE_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "FEE_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "MISSING_PAYMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "MISSING_SETTLEMENT": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      },
+      "REFUND_MISMATCH": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1_score": 1.0,
+        "support": 100
+      }
+    },
+    "confusion_matrix": [
+      [
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100
+      ]
+    ]
+  },
+  "latency_profile_ms": {
+    "cold_load_ms": 4.57,
+    "p50_ms": 7.914,
+    "p95_ms": 10.677,
+    "p99_ms": 20.721,
+    "mean_ms": 8.731,
+    "throughput_samples_per_sec": 82142.3
+  },
+  "stress_test_cases": [
+    {
+      "case": "Extreme Amount Outlier",
+      "prediction": "REFUND_MISMATCH",
+      "conf": 0.9768
+    },
+    {
+      "case": "Unseen Categorical",
+      "prediction": "AMBIGUOUS_MATCH",
+      "conf": 0.9747
+    },
+    {
+      "case": "Conflicting Discrepancies",
+      "prediction": "FEE_MISMATCH",
+      "abstaining": false
+    },
+    {
+      "case": "Zero Evidence Dossier",
+      "prediction": "INSUFFICIENT_EVIDENCE",
+      "abstaining": false
+    }
+  ]
+}

@@ -6,7 +6,7 @@ from app.modules.investigation.grounding import EvidenceGroundingValidator
 from app.modules.investigation.policy import DeterministicPolicyGate
 from app.modules.investigation.providers import (
     BaseInvestigationProvider,
-    GeminiInvestigationProvider,
+    LocalMLInvestigationProvider,
     MockInvestigationProvider,
     get_investigation_provider,
 )
@@ -23,7 +23,7 @@ __all__ = [
     "BaseInvestigationProvider",
     "DeterministicPolicyGate",
     "EvidenceGroundingValidator",
-    "GeminiInvestigationProvider",
+    "LocalMLInvestigationProvider",
     "InvestigationReportData",
     "InvestigationResponse",
     "InvestigationService",

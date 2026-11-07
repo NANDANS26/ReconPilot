@@ -1,3 +1,9 @@
+"""
+Deterministic Reconciliation Pipeline Engine for ReconPilot.
+Executes mathematical calculation, isolation, bilateral matching, and exception classification.
+All calculations use exact Python Decimal arithmetic.
+"""
+
 import uuid
 from collections import defaultdict
 from datetime import UTC, datetime
@@ -44,7 +50,6 @@ class EnginePlanResultItem(NamedTuple):
     confidence: Decimal
     explanation: str
     matching_fields: dict[str, Any]
-    # Exception metadata if match_status == EXCEPTION
     classification: ClassificationResult | None
 
 
@@ -74,39 +79,57 @@ def execute_reconciliation_plan(
 ) -> EngineRunPlan:
     """
     Pure deterministic reconciliation pipeline:
-    1. Duplication detection
-    2. Exact & strong relationship matching
-    3. Monetary calculation with Decimal arithmetic
-    4. Exception classification
-    5. Aggregated plan counters
+    1. Merchant isolation enforcement
+    2. Duplication detection & pre-matching quarantine
+    3. Bilateral exact & reference matching
+    4. Exact monetary calculation with Decimal arithmetic
+    5. Exception classification
+    6. Aggregated plan counters
     """
     now = current_time or datetime.now(UTC)
 
-    # 1. Duplicate detection
-    dup_res = detect_duplicates(payments, settlement_items)
+    # 1. Enforce strict merchant isolation at engine boundary
+    scoped_payments = [p for p in payments if p.merchant_id == merchant_id]
+    scoped_items = [s for s in settlement_items if s.merchant_id == merchant_id]
+    scoped_refunds = [r for r in refunds if r.merchant_id == merchant_id]
+    scoped_fees = [f for f in fees if f.merchant_id == merchant_id]
+    scoped_adjustments = [a for a in adjustments if a.merchant_id == merchant_id]
+
+    # 2. Duplicate detection across all components
+    dup_res = detect_duplicates(
+        scoped_payments,
+        scoped_items,
+        fees=scoped_fees,
+        refunds=scoped_refunds,
+        adjustments=scoped_adjustments,
+    )
+
+    # Quarantine duplicate records before candidate matching so they cannot steal matches
+    clean_payments = [p for p in scoped_payments if p.id not in dup_res.duplicate_payment_ids]
+    clean_items = [s for s in scoped_items if s.id not in dup_res.duplicate_item_ids]
 
     # Group support records by payment_id
     refunds_by_payment: dict[uuid.UUID, list[NormalizedRefund]] = defaultdict(list)
-    for r in refunds:
+    for r in scoped_refunds:
         refunds_by_payment[r.payment_id].append(r)
 
     fees_by_payment: dict[uuid.UUID, list[NormalizedFee]] = defaultdict(list)
-    for f in fees:
+    for f in scoped_fees:
         if f.payment_id:
             fees_by_payment[f.payment_id].append(f)
 
     adjustments_by_payment: dict[uuid.UUID, list[NormalizedAdjustment]] = defaultdict(list)
-    for a in adjustments:
+    for a in scoped_adjustments:
         if a.payment_id:
             adjustments_by_payment[a.payment_id].append(a)
 
-    item_by_id = {item.id: item for item in settlement_items}
-    payment_by_id = {p.id: p for p in payments}
+    item_by_id = {item.id: item for item in scoped_items}
+    payment_by_id = {p.id: p for p in scoped_payments}
 
-    # 2. Matching
+    # 3. Matching on clean non-duplicate records
     matching = run_deterministic_matching(
-        payments=payments,
-        settlement_items=settlement_items,
+        payments=clean_payments,
+        settlement_items=clean_items,
         date_window_days=date_window_days,
     )
 
@@ -116,7 +139,7 @@ def execute_reconciliation_plan(
     exception_count = 0
     review_required_count = 0
 
-    # 3. Process matched pairs
+    # 4. Process matched pairs
     for match in matching.matched_pairs:
         payment = payment_by_id[match.payment_id]
         item = item_by_id[match.settlement_item_id]
@@ -170,7 +193,7 @@ def execute_reconciliation_plan(
             )
         )
 
-    # 4. Process unmatched payments (MISSING_SETTLEMENT / DELAYED_SETTLEMENT)
+    # 5. Process unmatched clean payments (MISSING_SETTLEMENT / DELAYED_SETTLEMENT)
     for p_id in matching.unmatched_payment_ids:
         payment = payment_by_id[p_id]
         p_refunds = refunds_by_payment.get(payment.id, [])
@@ -186,12 +209,11 @@ def execute_reconciliation_plan(
             tolerance=tolerance,
         )
 
-        is_dup_pay = p_id in dup_res.duplicate_payment_ids
         classification = classify_unmatched_payment(
             payment=payment,
             current_time=now,
             settlement_delay_days=settlement_delay_days,
-            is_duplicate=is_dup_pay,
+            is_duplicate=False,
         )
 
         unmatched_count += 1
@@ -211,20 +233,62 @@ def execute_reconciliation_plan(
                 tolerance=tolerance,
                 confidence=STAGE1_CONFIDENCE,
                 explanation=classification.description,
-                matching_fields={
-                    "reason": "duplicate_payment" if is_dup_pay else "unmatched_captured_payment"
-                },
+                matching_fields={"reason": "unmatched_captured_payment"},
                 classification=classification,
             )
         )
 
-    # 5. Process unmatched settlement items (MISSING_PAYMENT / DUPLICATE_SETTLEMENT)
+    # 6. Process quarantined duplicate payments
+    for p_id in dup_res.duplicate_payment_ids:
+        payment = payment_by_id[p_id]
+        p_refunds = refunds_by_payment.get(payment.id, [])
+        p_fees = fees_by_payment.get(payment.id, [])
+        p_adjs = adjustments_by_payment.get(payment.id, [])
+
+        breakdown = calculate_expected_settlement_for_payment(
+            payment=payment,
+            refunds=p_refunds,
+            fees=p_fees,
+            adjustments=p_adjs,
+            actual_item=None,
+            tolerance=tolerance,
+        )
+
+        classification = classify_unmatched_payment(
+            payment=payment,
+            current_time=now,
+            settlement_delay_days=settlement_delay_days,
+            is_duplicate=True,
+        )
+
+        unmatched_count += 1
+        exception_count += 1
+        review_required_count += 1
+
+        plan_items.append(
+            EnginePlanResultItem(
+                payment_id=payment.id,
+                settlement_id=None,
+                settlement_item_id=None,
+                match_type=MatchType.UNMATCHED,
+                match_status=MatchStatus.EXCEPTION,
+                expected_amount=breakdown.expected_settlement,
+                actual_amount=Decimal("0.00"),
+                difference=breakdown.expected_settlement,
+                tolerance=tolerance,
+                confidence=STAGE1_CONFIDENCE,
+                explanation=classification.description,
+                matching_fields={"reason": "duplicate_payment"},
+                classification=classification,
+            )
+        )
+
+    # 7. Process unmatched clean settlement items (MISSING_PAYMENT)
     for item_id in matching.unmatched_settlement_item_ids:
         item = item_by_id[item_id]
-        is_dup_item = item_id in dup_res.duplicate_item_ids
         classification = classify_unmatched_settlement_item(
             item=item,
-            is_duplicate=is_dup_item,
+            is_duplicate=False,
         )
 
         unmatched_count += 1
@@ -252,7 +316,40 @@ def execute_reconciliation_plan(
             )
         )
 
-    total_records = len(payments) + len(settlement_items)
+    # 8. Process quarantined duplicate settlement items
+    for item_id in dup_res.duplicate_item_ids:
+        item = item_by_id[item_id]
+        classification = classify_unmatched_settlement_item(
+            item=item,
+            is_duplicate=True,
+        )
+
+        unmatched_count += 1
+        exception_count += 1
+        review_required_count += 1
+
+        plan_items.append(
+            EnginePlanResultItem(
+                payment_id=None,
+                settlement_id=item.settlement_id,
+                settlement_item_id=item.id,
+                match_type=MatchType.UNMATCHED,
+                match_status=MatchStatus.EXCEPTION,
+                expected_amount=Decimal("0.00"),
+                actual_amount=item.net_amount,
+                difference=-item.net_amount,
+                tolerance=tolerance,
+                confidence=STAGE1_CONFIDENCE,
+                explanation=classification.description,
+                matching_fields={
+                    "reason": "duplicate_settlement_item",
+                    "settlement_item_id": str(item.id),
+                },
+                classification=classification,
+            )
+        )
+
+    total_records = len(scoped_payments) + len(scoped_items)
 
     return EngineRunPlan(
         results=plan_items,
@@ -260,7 +357,7 @@ def execute_reconciliation_plan(
         matched_records=matched_count,
         unmatched_records=unmatched_count,
         exception_records=exception_count,
-        auto_classified_records=0,  # AI-assisted auto classification deferred to policy gate in Phase 05
+        auto_classified_records=0,
         review_required_records=review_required_count,
         duplicate_candidates=len(dup_res.duplicate_payment_ids) + len(dup_res.duplicate_item_ids),
         ambiguous_candidates=len(matching.ambiguous_pairs),

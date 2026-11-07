@@ -54,7 +54,7 @@ erDiagram
 | Table Name | Entity Class | Responsibility | Primary Key | Key Foreign Keys |
 | :--- | :--- | :--- | :--- | :--- |
 | `merchants` | `Merchant` | Tenant identity, billing currency (`INR`), timezone, status. | UUID | None |
-| `source_integrations`| `SourceIntegration` | Merchant payment channels (`RAZORPAY`, `BANK_FEED`, `CSV_UPLOAD`). | UUID | `merchant_id` |
+| `source_integrations`| `SourceIntegration` | Merchant payment channels (`PAYMENT_GATEWAY`, `BANK_FEED`, `CSV_UPLOAD`). | UUID | `merchant_id` |
 | `payments` | `Payment` | Normalized ledger of captured, authorized, refunded, or failed charges. | UUID | `merchant_id`, `source_integration_id` |
 | `refunds` | `Refund` | Partial or multiple refund transactions linked to captured payments. | UUID | `merchant_id`, `payment_id` |
 | `fees` | `Fee` | MDR, interchange, gateway fees, and GST tax broken down distinctly. | UUID | `merchant_id`, `payment_id` |

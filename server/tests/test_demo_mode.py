@@ -1,8 +1,6 @@
 import uuid
 from datetime import timedelta
 
-from fastapi.testclient import TestClient
-
 from app.core.security import create_access_token
 from app.db.session import SessionLocal
 from app.main import app
@@ -13,6 +11,7 @@ from app.models.payment import Payment
 from app.models.settlement import Settlement
 from app.models.user import User
 from app.modules.demo.service import DemoService
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
@@ -119,9 +118,7 @@ def test_demo_no_financial_mutation_guarantee():
         service = DemoService(db=db, merchant_id=demo_merchant_id)
 
         # Count initial records
-        pay_count_before = (
-            db.query(Payment).filter(Payment.merchant_id == demo_merchant_id).count()
-        )
+        pay_count_before = db.query(Payment).filter(Payment.merchant_id == demo_merchant_id).count()
         settle_count_before = (
             db.query(Settlement).filter(Settlement.merchant_id == demo_merchant_id).count()
         )

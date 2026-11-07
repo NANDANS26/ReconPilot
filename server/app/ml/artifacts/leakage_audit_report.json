@@ -1,0 +1,121 @@
+{
+  "audit_timestamp": "2026-11-07T21:21:01.782115",
+  "legacy_audit": {
+    "generator_name": "Legacy Baseline Generator",
+    "total_train_samples": 1100,
+    "total_test_samples": 550,
+    "total_classes": 11,
+    "exact_duplicates_across_splits": 0,
+    "classes_with_perfect_single_feature_isolation": 7,
+    "detected_fingerprints": {
+      "FEE_MISMATCH": {
+        "feature": "fee_difference_minor",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'fee_difference_minor' is strictly > 0 for FEE_MISMATCH and strictly 0 for all other classes."
+      },
+      "REFUND_MISMATCH": {
+        "feature": "refund_difference_minor",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'refund_difference_minor' is strictly > 0 for REFUND_MISMATCH and strictly 0 for all other classes."
+      },
+      "ADJUSTMENT_MISMATCH": {
+        "feature": "adjustment_difference_minor",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'adjustment_difference_minor' is strictly > 0 for ADJUSTMENT_MISMATCH and strictly 0 for all other classes."
+      },
+      "DUPLICATE_PAYMENT": {
+        "feature": "duplicate_payment_count",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'duplicate_payment_count' is strictly > 0 for DUPLICATE_PAYMENT and strictly 0 for all other classes."
+      },
+      "DUPLICATE_SETTLEMENT": {
+        "feature": "duplicate_settlement_count",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'duplicate_settlement_count' is strictly > 0 for DUPLICATE_SETTLEMENT and strictly 0 for all other classes."
+      },
+      "AMBIGUOUS_MATCH": {
+        "feature": "candidate_count",
+        "type": "PERFECT_THRESHOLD_ISOLATION",
+        "explanation": "Feature 'candidate_count' min (2.0) > max of all other classes (1.0)."
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "feature": "has_incomplete_evidence",
+        "type": "PERFECT_NONZERO_ISOLATION",
+        "explanation": "Feature 'has_incomplete_evidence' is strictly > 0 for INSUFFICIENT_EVIDENCE and strictly 0 for all other classes."
+      }
+    },
+    "top_mutual_information_features": [
+      [
+        "variance_minor",
+        0.979
+      ],
+      [
+        "abs_variance_minor",
+        0.806
+      ],
+      [
+        "missing_info_count",
+        0.6634
+      ],
+      [
+        "has_internal_id_match",
+        0.6106
+      ],
+      [
+        "conflict_count",
+        0.5585
+      ]
+    ]
+  },
+  "upgraded_audit": {
+    "generator_name": "Upgraded Realistic Group-Separated Generator",
+    "total_train_samples": 1100,
+    "total_test_samples": 550,
+    "total_classes": 11,
+    "exact_duplicates_across_splits": 0,
+    "classes_with_perfect_single_feature_isolation": 3,
+    "detected_fingerprints": {
+      "FEE_MISMATCH": {
+        "feature": "fee_difference_minor",
+        "type": "PERFECT_THRESHOLD_ISOLATION",
+        "explanation": "Feature 'fee_difference_minor' min (291.0) > max of all other classes (74.0)."
+      },
+      "REFUND_MISMATCH": {
+        "feature": "refund_difference_minor",
+        "type": "PERFECT_THRESHOLD_ISOLATION",
+        "explanation": "Feature 'refund_difference_minor' min (5406.0) > max of all other classes (59.0)."
+      },
+      "ADJUSTMENT_MISMATCH": {
+        "feature": "adjustment_difference_minor",
+        "type": "PERFECT_THRESHOLD_ISOLATION",
+        "explanation": "Feature 'adjustment_difference_minor' min (2858.0) > max of all other classes (74.0)."
+      }
+    },
+    "top_mutual_information_features": [
+      [
+        "variance_minor",
+        1.0998
+      ],
+      [
+        "abs_variance_minor",
+        0.8865
+      ],
+      [
+        "missing_info_count",
+        0.5825
+      ],
+      [
+        "has_internal_id_match",
+        0.5582
+      ],
+      [
+        "has_external_id_match",
+        0.553
+      ]
+    ]
+  },
+  "findings": {
+    "root_cause_of_legacy_100_percent": "The legacy generator used deterministic disjoint feature assignments per class (e.g. fee_difference_minor only set for FEE_MISMATCH, duplicate_payment_count only for DUPLICATE_PAYMENT). 9 of 11 classes had perfect 1-feature decision bounds.",
+    "upgraded_generator_improvements": "The upgraded generator injects realistic operational noise, cross-feature confounders (e.g. natural refunds and adjustments across normal transactions), continuous timing distributions, and strict group-based separation across 12 distinct business archetypes. The holdout test set tests models on unseen business models."
+  }
+}

@@ -36,6 +36,12 @@ venv/
 ENV/
 env/
 
+# ML artifacts and temporary training caches
+catboost_info/
+lightning_logs/
+wandb/
+server/app/ml/artifacts/challengers/*.joblib
+
 # Node / Frontend
 node_modules/
 npm-debug.log*

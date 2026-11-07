@@ -29,18 +29,22 @@ class Settings(BaseSettings):
     DB_MAX_OVERFLOW: int = 20
     DB_POOL_PRE_PING: bool = True
 
-    # Razorpay Integration credentials (optional in dev)
-    RAZORPAY_KEY_ID: str = ""
-    RAZORPAY_KEY_SECRET: str = ""
-    RAZORPAY_WEBHOOK_SECRET: str = ""
+    # Investigation & Local ML Configuration
+    AI_PROVIDER: str = "local_ml"
+    ML_MODEL_NAME: str = "reconpilot-rf-v1"
+    ML_ARTIFACT_PATH: str = "server/app/ml/artifacts/root_cause_classifier.joblib"
+    ML_METADATA_PATH: str = "server/app/ml/artifacts/root_cause_classifier_metadata.json"
+    ML_CONFIDENCE_THRESHOLD: float = Field(default=0.50, ge=0.0, le=1.0)
+    ML_MIN_MARGIN: float = Field(default=0.10, ge=0.0, le=1.0)
 
-    # LLM & AI Investigation configuration (mock by default)
-    LLM_API_KEY: str = ""
-    LLM_MODEL: str = "gemini-1.5-pro"
-    AI_PROVIDER: str = "mock"
+    # Reconciliation Tolerance & Policy Gate Thresholds
     AMOUNT_TOLERANCE: float = 1.00
     AI_AUTO_CLASSIFY_THRESHOLD: float = Field(default=0.90, ge=0.0, le=1.0)
     AI_REVIEW_THRESHOLD: float = Field(default=0.75, ge=0.0, le=1.0)
+
+    # High-impact review thresholds
+    HIGH_IMPACT_AMOUNT_THRESHOLD: float = 1000.00
+    HIGH_IMPACT_VARIANCE_THRESHOLD: float = 100.00
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
@@ -51,13 +55,14 @@ class Settings(BaseSettings):
             return list(v)
         return ["http://localhost:5173", "http://127.0.0.1:5173"]
 
+    # Backward-compatibility property for frontend status checks
     @property
     def has_razorpay_credentials(self) -> bool:
-        return bool(self.RAZORPAY_KEY_ID and self.RAZORPAY_KEY_SECRET)
+        return False
 
     @property
     def has_llm_credentials(self) -> bool:
-        return bool(self.LLM_API_KEY)
+        return False
 
 
 @lru_cache

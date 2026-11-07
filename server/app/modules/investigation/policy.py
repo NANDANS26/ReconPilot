@@ -53,9 +53,11 @@ class DeterministicPolicyGate:
             requires_human = True
             policy_flags.append(cls.POLICY_HUMAN_REVIEW_REQUIRED)
 
+        # High financial impact check: ALWAYS forces mandatory human review
         if abs(dossier.summary.expected_amount) > Decimal("1000.00") or variance > Decimal(
             "100.00"
         ):
+            requires_human = True
             policy_flags.append(cls.POLICY_HIGH_FINANCIAL_IMPACT)
 
         # Ambiguous causes (PLAUSIBLE or UNDETERMINED)

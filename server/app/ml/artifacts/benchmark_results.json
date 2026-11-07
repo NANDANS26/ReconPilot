@@ -1,0 +1,1922 @@
+{
+  "timestamp": "2026-11-07T21:41:16.646070",
+  "total_benchmark_duration_seconds": 202.18,
+  "dataset_archetypes": {
+    "train": [
+      "B2B_WHOLESALE",
+      "EDTECH_ANNUAL",
+      "FOOD_DELIVERY",
+      "HEALTHCARE_CLINIC",
+      "LOGISTICS_COURIER",
+      "RETAIL_ECOMMERCE",
+      "SAAS_RECURRING",
+      "UTILITY_BILLING"
+    ],
+    "val": [
+      "FINTECH_NEOBANK",
+      "GAMING_MICROTX"
+    ],
+    "test_holdout": [
+      "CROSS_BORDER_EXPORT",
+      "TRAVEL_AIRLINE"
+    ]
+  },
+  "sample_counts": {
+    "train": 2200,
+    "val": 550,
+    "test_holdout": 1100
+  },
+  "baseline_model": "random_forest",
+  "selected_champion": "catboost",
+  "champion_selection_rationale": "Promoted CATBOOST as New Production Champion: maintained equivalent holdout Macro F1 (0.9991 vs baseline 1.0000) while delivering a 77.0% latency reduction (9.613ms vs 41.877ms), 204.98KB artifact size vs 759.47KB, and zero critical class recall degradation.",
+  "champion_summary": {
+    "model_name": "reconpilot-catboost-champion",
+    "model_family": "catboost",
+    "feature_schema_version": "v1.0",
+    "algorithm": "catboost",
+    "classes": [
+      "FEE_MISMATCH",
+      "REFUND_MISMATCH",
+      "ADJUSTMENT_MISMATCH",
+      "AMOUNT_MISMATCH",
+      "MISSING_PAYMENT",
+      "MISSING_SETTLEMENT",
+      "DUPLICATE_PAYMENT",
+      "DUPLICATE_SETTLEMENT",
+      "DELAYED_SETTLEMENT",
+      "AMBIGUOUS_MATCH",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "promoted_at": "2026-11-07T21:41:16.645013",
+    "selection_rationale": "Promoted CATBOOST as New Production Champion: maintained equivalent holdout Macro F1 (0.9991 vs baseline 1.0000) while delivering a 77.0% latency reduction (9.613ms vs 41.877ms), 204.98KB artifact size vs 759.47KB, and zero critical class recall degradation.",
+    "metrics": {
+      "accuracy": 0.9991,
+      "macro_f1": 0.9991,
+      "weighted_f1": 0.9991,
+      "balanced_accuracy": 0.9991,
+      "log_loss": 0.0255,
+      "brier_score": 0.0014,
+      "expected_calibration_error": 0.0248,
+      "per_class": {
+        "ADJUSTMENT_MISMATCH": {
+          "precision": 0.9901,
+          "recall": 1.0,
+          "f1_score": 0.995,
+          "support": 100
+        },
+        "AMBIGUOUS_MATCH": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "AMOUNT_MISMATCH": {
+          "precision": 1.0,
+          "recall": 0.99,
+          "f1_score": 0.995,
+          "support": 100
+        },
+        "DELAYED_SETTLEMENT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "DUPLICATE_PAYMENT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "DUPLICATE_SETTLEMENT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "FEE_MISMATCH": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "INSUFFICIENT_EVIDENCE": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "MISSING_PAYMENT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "MISSING_SETTLEMENT": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        },
+        "REFUND_MISMATCH": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0,
+          "support": 100
+        }
+      },
+      "confusion_matrix": [
+        [
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          99,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          100,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          100,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          100,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          100,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          100
+        ]
+      ]
+    },
+    "calibration": {
+      "brier_score_uncalibrated": 0.0148,
+      "brier_score_calibrated": 0.0028,
+      "ece_uncalibrated": 0.0744,
+      "ece_calibrated": 0.0264,
+      "calibration_improved": true
+    },
+    "latency_ms": 0.0,
+    "artifact_size_kb": 204.98
+  },
+  "candidates": {
+    "random_forest": {
+      "algorithm": "random_forest",
+      "best_params": {
+        "n_estimators": 80,
+        "max_depth": 10,
+        "min_samples_split": 2
+      },
+      "train_duration_s": 0.264,
+      "inference_latency_ms": 41.877,
+      "artifact_size_kb": 759.47,
+      "tuning": {
+        "history": [
+          {
+            "config_index": 0,
+            "params": {
+              "n_estimators": 80,
+              "max_depth": 10,
+              "min_samples_split": 2
+            },
+            "mean_macro_f1": 1.0,
+            "fold_f1s": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cv_duration_seconds": 1.13
+          },
+          {
+            "config_index": 1,
+            "params": {
+              "n_estimators": 100,
+              "max_depth": 12,
+              "min_samples_split": 2
+            },
+            "mean_macro_f1": 1.0,
+            "fold_f1s": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cv_duration_seconds": 1.24
+          }
+        ],
+        "best_params": {
+          "n_estimators": 80,
+          "max_depth": 10,
+          "min_samples_split": 2
+        }
+      },
+      "calibration": {
+        "brier_score_uncalibrated": 0.0398,
+        "brier_score_calibrated": 0.0044,
+        "ece_uncalibrated": 0.1106,
+        "ece_calibrated": 0.0268,
+        "calibration_improved": true
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "log_loss": 0.0247,
+        "brier_score": 0.0008,
+        "expected_calibration_error": 0.0243,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    "hist_gradient_boosting": {
+      "algorithm": "hist_gradient_boosting",
+      "best_params": {
+        "max_iter": 50,
+        "max_depth": 6,
+        "learning_rate": 0.08
+      },
+      "train_duration_s": 10.559,
+      "inference_latency_ms": 77.342,
+      "artifact_size_kb": 1283.69,
+      "tuning": {
+        "history": [
+          {
+            "config_index": 0,
+            "params": {
+              "max_iter": 50,
+              "max_depth": 6,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9982,
+            "fold_f1s": [
+              0.9986,
+              1.0,
+              0.9959
+            ],
+            "cv_duration_seconds": 24.68
+          },
+          {
+            "config_index": 1,
+            "params": {
+              "max_iter": 80,
+              "max_depth": 6,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9977,
+            "fold_f1s": [
+              1.0,
+              1.0,
+              0.9932
+            ],
+            "cv_duration_seconds": 29.49
+          }
+        ],
+        "best_params": {
+          "max_iter": 50,
+          "max_depth": 6,
+          "learning_rate": 0.08
+        }
+      },
+      "calibration": {
+        "brier_score_uncalibrated": 0.0055,
+        "brier_score_calibrated": 0.0051,
+        "ece_uncalibrated": 0.0023,
+        "ece_calibrated": 0.0306,
+        "calibration_improved": true
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "log_loss": 0.0289,
+        "brier_score": 0.0019,
+        "expected_calibration_error": 0.0275,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    "xgboost": {
+      "algorithm": "xgboost",
+      "best_params": {
+        "n_estimators": 60,
+        "max_depth": 5,
+        "learning_rate": 0.08
+      },
+      "train_duration_s": 1.807,
+      "inference_latency_ms": 11.062,
+      "artifact_size_kb": 537.22,
+      "tuning": {
+        "history": [
+          {
+            "config_index": 0,
+            "params": {
+              "n_estimators": 60,
+              "max_depth": 5,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9964,
+            "fold_f1s": [
+              0.9986,
+              1.0,
+              0.9905
+            ],
+            "cv_duration_seconds": 5.04
+          },
+          {
+            "config_index": 1,
+            "params": {
+              "n_estimators": 80,
+              "max_depth": 5,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9964,
+            "fold_f1s": [
+              0.9986,
+              1.0,
+              0.9905
+            ],
+            "cv_duration_seconds": 6.19
+          }
+        ],
+        "best_params": {
+          "n_estimators": 60,
+          "max_depth": 5,
+          "learning_rate": 0.08
+        }
+      },
+      "calibration": {
+        "brier_score_uncalibrated": 0.0185,
+        "brier_score_calibrated": 0.0175,
+        "ece_uncalibrated": 0.02,
+        "ece_calibrated": 0.0387,
+        "calibration_improved": true
+      },
+      "metrics": {
+        "accuracy": 0.9991,
+        "macro_f1": 0.9991,
+        "weighted_f1": 0.9991,
+        "balanced_accuracy": 0.9991,
+        "log_loss": 0.0395,
+        "brier_score": 0.0028,
+        "expected_calibration_error": 0.0363,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 0.99,
+            "f1_score": 0.995,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 0.9901,
+            "recall": 1.0,
+            "f1_score": 0.995,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            99,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    "lightgbm": {
+      "algorithm": "lightgbm",
+      "best_params": {
+        "n_estimators": 60,
+        "max_depth": 5,
+        "num_leaves": 24,
+        "learning_rate": 0.08
+      },
+      "train_duration_s": 5.477,
+      "inference_latency_ms": 10.671,
+      "artifact_size_kb": 1396.15,
+      "tuning": {
+        "history": [
+          {
+            "config_index": 0,
+            "params": {
+              "n_estimators": 60,
+              "max_depth": 5,
+              "num_leaves": 24,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9995,
+            "fold_f1s": [
+              0.9986,
+              1.0,
+              1.0
+            ],
+            "cv_duration_seconds": 15.11
+          },
+          {
+            "config_index": 1,
+            "params": {
+              "n_estimators": 80,
+              "max_depth": 5,
+              "num_leaves": 24,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9995,
+            "fold_f1s": [
+              0.9986,
+              1.0,
+              1.0
+            ],
+            "cv_duration_seconds": 18.44
+          }
+        ],
+        "best_params": {
+          "n_estimators": 60,
+          "max_depth": 5,
+          "num_leaves": 24,
+          "learning_rate": 0.08
+        }
+      },
+      "calibration": {
+        "brier_score_uncalibrated": 0.0066,
+        "brier_score_calibrated": 0.0067,
+        "ece_uncalibrated": 0.0012,
+        "ece_calibrated": 0.0323,
+        "calibration_improved": false
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "log_loss": 0.0299,
+        "brier_score": 0.0018,
+        "expected_calibration_error": 0.0287,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    "catboost": {
+      "algorithm": "catboost",
+      "best_params": {
+        "iterations": 60,
+        "depth": 5,
+        "learning_rate": 0.08
+      },
+      "train_duration_s": 2.633,
+      "inference_latency_ms": 9.613,
+      "artifact_size_kb": 204.98,
+      "tuning": {
+        "history": [
+          {
+            "config_index": 0,
+            "params": {
+              "iterations": 60,
+              "depth": 5,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9995,
+            "fold_f1s": [
+              1.0,
+              1.0,
+              0.9986
+            ],
+            "cv_duration_seconds": 8.65
+          },
+          {
+            "config_index": 1,
+            "params": {
+              "iterations": 80,
+              "depth": 5,
+              "learning_rate": 0.08
+            },
+            "mean_macro_f1": 0.9995,
+            "fold_f1s": [
+              1.0,
+              1.0,
+              0.9986
+            ],
+            "cv_duration_seconds": 10.64
+          }
+        ],
+        "best_params": {
+          "iterations": 60,
+          "depth": 5,
+          "learning_rate": 0.08
+        }
+      },
+      "calibration": {
+        "brier_score_uncalibrated": 0.0148,
+        "brier_score_calibrated": 0.0028,
+        "ece_uncalibrated": 0.0744,
+        "ece_calibrated": 0.0264,
+        "calibration_improved": true
+      },
+      "metrics": {
+        "accuracy": 0.9991,
+        "macro_f1": 0.9991,
+        "weighted_f1": 0.9991,
+        "balanced_accuracy": 0.9991,
+        "log_loss": 0.0255,
+        "brier_score": 0.0014,
+        "expected_calibration_error": 0.0248,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 0.9901,
+            "recall": 1.0,
+            "f1_score": 0.995,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 0.99,
+            "f1_score": 0.995,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            99,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    },
+    "ensemble_soft_voting": {
+      "algorithm": "SoftVotingEnsemble",
+      "members": [
+        "lightgbm (0.40)",
+        "catboost (0.40)",
+        "random_forest (0.20)"
+      ],
+      "train_duration_s": 0.0,
+      "inference_latency_ms": 58.932,
+      "artifact_size_kb": 2355.96,
+      "calibration": {
+        "brier_score": 0.0011,
+        "ece": 0.0263
+      },
+      "metrics": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "balanced_accuracy": 1.0,
+        "log_loss": 0.0268,
+        "brier_score": 0.0011,
+        "expected_calibration_error": 0.0263,
+        "per_class": {
+          "ADJUSTMENT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMBIGUOUS_MATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "AMOUNT_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DELAYED_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "DUPLICATE_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "FEE_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "INSUFFICIENT_EVIDENCE": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_PAYMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "MISSING_SETTLEMENT": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          },
+          "REFUND_MISMATCH": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1_score": 1.0,
+            "support": 100
+          }
+        },
+        "confusion_matrix": [
+          [
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            100
+          ]
+        ]
+      }
+    }
+  }
+}

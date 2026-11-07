@@ -1,0 +1,98 @@
+{
+  "audit_timestamp": "2026-11-07T21:18:11.841138",
+  "total_train_samples": 1100,
+  "total_test_samples": 550,
+  "total_classes": 11,
+  "exact_duplicates_across_splits": 0,
+  "classes_with_perfect_single_feature_isolation": 9,
+  "detected_fingerprints": {
+    "FEE_MISMATCH": {
+      "feature": "fee_difference_minor",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'fee_difference_minor' is strictly > 0 for FEE_MISMATCH and strictly 0 for all other classes."
+    },
+    "REFUND_MISMATCH": {
+      "feature": "refund_difference_minor",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'refund_difference_minor' is strictly > 0 for REFUND_MISMATCH and strictly 0 for all other classes."
+    },
+    "ADJUSTMENT_MISMATCH": {
+      "feature": "adjustment_difference_minor",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'adjustment_difference_minor' is strictly > 0 for ADJUSTMENT_MISMATCH and strictly 0 for all other classes."
+    },
+    "MISSING_PAYMENT": {
+      "feature": "variance_minor",
+      "type": "PERFECT_THRESHOLD_ISOLATION",
+      "explanation": "Feature 'variance_minor' min (109662.0) > max of all other classes (14864.0)."
+    },
+    "DUPLICATE_PAYMENT": {
+      "feature": "duplicate_payment_count",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'duplicate_payment_count' is strictly > 0 for DUPLICATE_PAYMENT and strictly 0 for all other classes."
+    },
+    "DUPLICATE_SETTLEMENT": {
+      "feature": "duplicate_settlement_count",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'duplicate_settlement_count' is strictly > 0 for DUPLICATE_SETTLEMENT and strictly 0 for all other classes."
+    },
+    "DELAYED_SETTLEMENT": {
+      "feature": "days_between_payment_and_settlement",
+      "type": "PERFECT_THRESHOLD_ISOLATION",
+      "explanation": "Feature 'days_between_payment_and_settlement' min (6.06) > max of all other classes (2.99)."
+    },
+    "AMBIGUOUS_MATCH": {
+      "feature": "candidate_count",
+      "type": "PERFECT_THRESHOLD_ISOLATION",
+      "explanation": "Feature 'candidate_count' min (2.0) > max of all other classes (1.0)."
+    },
+    "INSUFFICIENT_EVIDENCE": {
+      "feature": "has_incomplete_evidence",
+      "type": "PERFECT_NONZERO_ISOLATION",
+      "explanation": "Feature 'has_incomplete_evidence' is strictly > 0 for INSUFFICIENT_EVIDENCE and strictly 0 for all other classes."
+    }
+  },
+  "top_mutual_information_features": [
+    [
+      "variance_minor",
+      1.4461
+    ],
+    [
+      "abs_variance_minor",
+      1.2669
+    ],
+    [
+      "missing_info_count",
+      0.7247
+    ],
+    [
+      "has_internal_id_match",
+      0.5513
+    ],
+    [
+      "has_conflicting_evidence",
+      0.4955
+    ],
+    [
+      "conflict_count",
+      0.4875
+    ],
+    [
+      "contradicting_evidence_count",
+      0.4435
+    ],
+    [
+      "refund_count",
+      0.3414
+    ],
+    [
+      "fee_difference_minor",
+      0.3173
+    ],
+    [
+      "duplicate_settlement_count",
+      0.3158
+    ]
+  ],
+  "verdict": "CRITICAL_LEAKAGE_DETECTED: The baseline synthetic dataset exhibits deterministic feature fingerprints where individual classes are trivially isolated by single features, explaining the baseline 1.0000 Accuracy and Macro F1. An upgraded, noise-injected, scenario-grouped generator with realistic overlapping financial conditions is mandatory."
+}

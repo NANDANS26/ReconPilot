@@ -8,7 +8,8 @@ class MerchantStatus(StrEnum):
 
 
 class SourceProvider(StrEnum):
-    RAZORPAY = "RAZORPAY"
+    PAYMENT_GATEWAY = "PAYMENT_GATEWAY"
+    RAZORPAY = "RAZORPAY"  # Backward-compatible legacy alias
     BANK_FEED = "BANK_FEED"
     INTERNAL_LEDGER = "INTERNAL_LEDGER"
     CSV_UPLOAD = "CSV_UPLOAD"

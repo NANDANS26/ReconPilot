@@ -28,7 +28,7 @@ When an exception occurs, the system packages evidence into a structured schema:
 ```
 
 ## 3. Constrained Output Schema
-The AI provider (Gemini 1.5 Pro or mock) must respond matching a strict Pydantic model:
+The AI investigation provider (Local ML Classifier or Mock Provider) must respond matching a strict Pydantic model:
 ```json
 {
   "hypothesized_cause": "International card processing fee tier applied rather than domestic debit slab.",
